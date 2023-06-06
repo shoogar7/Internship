@@ -9,21 +9,58 @@ fetch('https://api.spacexdata.com/v3/launches/')
             console.error('Error:', error);
         });
 
-    function displayAllLaunches(launches) {   
+function displayAllLaunches(launches) {   
 
         // musze sie obracac tez po colID
         // for po launches
         // wstawiam w html biore launcha mission
-        // nastepnie biote descption
+        // nastepnie biore descption
         // po forze wrzucam html do cola
 
-        //for launch
-        let cardBody = `<h3>${launch.mission_name}</h3>
-            <h6>Subtitle</h6>
-            <p>Information</p>
-            <a href="">Link</a>`;   
 
+        // uzyj: https://getbootstrap.com/docs/5.0/components/card/#kitchen-sink
+        // card-title: mission_patch
+        // card-subtitle : mission_name | launch_year | ID: flight_number  
+        // card-text: details
+        // href: <a href="launch.flight_number">More about flight_number</a>  //ten link nie ma działać 
+
+        //for launch
+        let i=0;
+    for(i=0; i<6; i++)
+    {
+      let colId = "col"+i;
+      let number=i;
+        
+        while(launches[number].details==null)
+        {
+         console.log(number);
+          number++;
+         console.log(number);
+         let num = number-1;
+          console.log(num);
+          if(launches[number].flight_number!=launches[num].flight_number)
+         {
+           console.log(launches[number].flight_number+" "+launches[num].flight_number);
+           number++;
+         }
+        }
+      
+      console.log(number);
+      let launchesArr = launches[number];
+        let cardBody = `<img src="${launchesArr.links.mission_patch}" class="card-img-top" alt="mission_patch">
+                     <div class="card-body">
+                       <h5 class="card-title">${launchesArr.mission_name} | ${launchesArr.launch_year} | ID: ${launchesArr.flight_number}</h5>
+                        <p class="card-text">${launchesArr.details}</p>
+                       <a href="launch.flight_number" class="card-link">More about ${launchesArr.mission_name}</a>
+                     </div>`;
+
+        document.getElementById(colId).innerHTML=cardBody;
     }
+}
+
+    
+
+    // Dzien 1
 
 
 // fetch('https://api.spacexdata.com/v3/launches/1')
