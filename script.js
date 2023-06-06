@@ -31,20 +31,20 @@ function displayAllLaunches(launches) {
       let colId = "col"+i;
       let number=i;
         
-        while(launches[number].details==null)
+        while(launches[number].details==null)//zmień na if
         {
          console.log(number);
           number++;
          console.log(number);
          let num = number-1;
           console.log(num);
-          if(launches[number].flight_number!=launches[num].flight_number)
+          if(launches[number].flight_number!=launches[num].flight_number)//jak nie ma details to dawaj, że nie ma danych i tyle B)
          {
            console.log(launches[number].flight_number+" "+launches[num].flight_number);
            number++;
          }
         }
-      
+      //powyżej do poprawy
       console.log(number);
       let launchesArr = launches[number];
         let cardBody = `<img src="${launchesArr.links.mission_patch}" class="card-img-top" alt="mission_patch">
