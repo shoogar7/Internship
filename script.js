@@ -12,11 +12,12 @@ function displayAllLaunches(launches)
 {
   const container = document.getElementById('con');
   let launchesLength=launches.length;
-  for(let i=0; i < launchesLength; i++)
+  let rowBody = "";
+  for(let i=0; i < launchesLength; i++)//i=0
   {
-    let rowBody = '<div class="row align-items-start">';
-    for(let j=0; j<3; j++)
-    {
+    if(i===0 || i%3===0){
+        rowBody += '<div class="row align-items-start">';//przypisze to
+      }
       let launchesArr = launches[i];
       let details = "There's no information about this mission."
       if(launchesArr.details !== null) {
@@ -34,10 +35,9 @@ function displayAllLaunches(launches)
           </div>
         </div>
       `;
-     i++;
-    }
-    rowBody += '</div>';
-    container.innerHTML+=rowBody;
-    i--;
+     if(i%3===2){
+      rowBody += '</div>';
+     }
   }
+  container.innerHTML+=rowBody;
 }
