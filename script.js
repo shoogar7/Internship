@@ -38,6 +38,8 @@ function displayAllLaunches(launches)
             <div class="card-body">
               <h5 class="card-title">${launchesArr.mission_name} | ${launchesArr.launch_year} | ID: ${launchesArr.flight_number}</h5>
               <p class="card-text">${details}</p>
+            </div>
+            <div class="card-footer">
               <a href="launch.flight_number" class="btn btn-primary">More about ${launchesArr.mission_name}</a>
             </div>
           </div>
