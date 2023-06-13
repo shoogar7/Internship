@@ -1,22 +1,12 @@
-fetch('https://api.spacexdata.com/v3/launches/')
-        .then(response => response.json())
-        .then(text => { 
-            console.log(text)
-            displayAllLaunches(text);
-            }
-        ) 
-        .catch((error) => {
-            console.error('Error:', error);
-        });
 function displayAllLaunches(launches) 
 {
   const container = document.getElementById('con');
   let launchesLength=launches.length;
   let rowBody = "";
-  for(let i=0; i < launchesLength; i++)//i=0
+  for(let i=0; i < launchesLength; i++)
   {
     if(i===0 || i%3===0){
-        rowBody += '<div class="row row-cols-1 row-cols-md-3 g-4">';//przypisze to
+        rowBody += '<div class="row row-cols-1 row-cols-md-3 g-4">';
       }
       let launchesArr = launches[i];
       let details = "There's no information about this mission."
@@ -30,7 +20,6 @@ function displayAllLaunches(launches)
           image = launchesArr.links.mission_patch_small;
         }
       }
-      //h-100
       rowBody += `
         <div class="col-md-4 mb-4">
           <div class="card h-100">
@@ -51,3 +40,14 @@ function displayAllLaunches(launches)
   }
   container.innerHTML+=rowBody;
 }
+
+fetch('https://api.spacexdata.com/v3/launches/')
+  .then(response => response.json())
+  .then(text => { 
+      console.log(text)
+      displayAllLaunches(text);
+      }
+  ) 
+  .catch((error) => {
+      console.error('Error:', error);
+  });
