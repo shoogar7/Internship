@@ -3,16 +3,14 @@ const paginationObj={
   offset:0,
   number_of_pages:null
 };
-const maxDisplayedLaunches = 6;
-const prevButton = document.getElementById("prev");
-const nextButton = document.getElementById("next");
 
-function displayAllLaunches(launches) 
+const maxDisplayedLaunches = 6;
+const paginationElement = document.getElementById("pagination");
+
+function displayLaunches(launches) 
 {
   const container = document.getElementById('con');
   const launchesLength=launches.length;
-  console.log(launchesLength);
-  console.log(paginationObj.number_of_pages);
   let rowBody = "";
   for(let i=0; i < launchesLength; i++)
   {
@@ -54,31 +52,24 @@ function displayAllLaunches(launches)
 
 function setNumberOfPages(launches){
   const launchesLength=launches.length;
-  paginationObj.number_of_pages = Math.floor(launchesLength/maxDisplayedLaunches);
+  paginationObj.number_of_pages = Math.ceil(launchesLength/maxDisplayedLaunches);
 }
 
-function pagination(page_number)
-{
-  paginationObj.offset = page_number*6;
-  console.log(page_number);
+function pagination(page_number) {
+  paginationObj.page_number = page_number;
 
-  if(paginationObj.page_number===0){
-    prevButton.classList.add("disabled")
-  }else{
-    prevButton.classList.remove("disabled")
-  }
+  paginationObj.offset = paginationObj.page_number * maxDisplayedLaunches;
 
-  if(paginationObj.page_number===paginationObj.number_of_pages){
-    nextButton.classList.add("disabled")
-  }else{
-    nextButton.classList.remove("disabled")
-  }
+  const isPreviewButtonDisabled = paginationObj.page_number === 0 ? true : false;
+
+  const isNextButtonDisabled = (paginationObj.page_number + 1) >= paginationObj.number_of_pages ? true : false;
 
   fetch(`https://api.spacexdata.com/v3/launches?limit=${maxDisplayedLaunches}&offset=${paginationObj.offset}`)
   .then(response => response.json())
   .then(text => { 
-      console.log(text);
-      displayAllLaunches(text);
+        console.log(text);
+        displayLaunches(text);
+        drawNumberOfPages(paginationObj.page_number, isPreviewButtonDisabled,  paginationObj.page_number, isNextButtonDisabled)
       }
   ) 
   .catch((error) => {
@@ -86,17 +77,49 @@ function pagination(page_number)
   });
 }
 
+function drawPrevButton(indexElement, disabled) {
+  let disabledClassName = disabled === true ? "disabled" : "";
+  return `<li id="prev" class="page-item ${disabledClassName}">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true" onclick="pagination(${indexElement - 1})">&laquo;</span>
+            </a>
+          </li>`;
+}
+
+function drawNextButton(indexElement, disabled) {
+  let disabledClassName = disabled === true ? "disabled" : "";
+  return  `<li id="next" class="page-item ${disabledClassName}">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true" onclick="pagination(${indexElement + 1})">&raquo;</span>
+              </a>
+            </li>`;
+}
+
+function drawNumberOfPages(previewNumber = 1, isPreviewButtonDisabled = true, nextNumber = 1, isNextButtonDisabled = false){
+  let liElement = drawPrevButton(previewNumber, isPreviewButtonDisabled)
+  for(let i=0; i < paginationObj.number_of_pages; i++)
+  {
+    liElement += `
+    <li class="page-item">
+      <a class="page-link" href="#" onclick="pagination(${i})">
+        ${(i+1)}
+      </a>
+    </li>`;
+  }
+  liElement += drawNextButton(nextNumber, isNextButtonDisabled)
+  paginationElement.innerHTML=liElement;
+}
 
 fetch("https://api.spacexdata.com/v3/launches/")
   .then(response => response.json())
   .then(launches => { 
-      console.log(launches);
       setNumberOfPages(launches);
+      drawNumberOfPages();
       const firstDisplayedLaunches = [];
       for(let i=0; i<maxDisplayedLaunches; i++){
         firstDisplayedLaunches.push(launches[i])
       }
-      displayAllLaunches(firstDisplayedLaunches);
+      displayLaunches(firstDisplayedLaunches);
       }
   ) 
   .catch((error) => {

@@ -32,20 +32,8 @@
       <!--All content generates in the .js file-->
     </div>
     <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center"">
-        <li id="prev" class="page-item disabled">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true" onclick="pagination(paginationObj.page_number-=1)">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#" onclick="pagination(paginationObj.page_number=0)">1</a></li>
-        <li class="page-item"><a class="page-link" href="#" onclick="pagination(paginationObj.page_number=1)">2</a></li>
-        <li class="page-item"><a class="page-link" href="#" onclick="pagination(paginationObj.page_number=2)">3</a></li>
-        <li id="next" class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true" onclick="pagination(paginationObj.page_number+=1)">&raquo;</span>
-          </a>
-        </li>
+      <ul id="pagination" class="pagination justify-content-center">
+        <!-- drawNumberOfPages -->
       </ul>
     </nav>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
