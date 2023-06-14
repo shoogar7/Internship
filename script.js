@@ -1,9 +1,9 @@
 const paginationObj={
   page_number:0, 
-  number_of_results:6, 
   offset:0,
   number_of_pages:null
 };
+const maxDisplayedLaunches = 6;
 const prevButton = document.getElementById("prev");
 const nextButton = document.getElementById("next");
 
@@ -12,7 +12,6 @@ function displayAllLaunches(launches)
   const container = document.getElementById('con');
   const launchesLength=launches.length;
   console.log(launchesLength);
-  paginationObj.number_of_pages = Math.ceil(launchesLength/paginationObj.number_of_results);
   console.log(paginationObj.number_of_pages);
   let rowBody = "";
   for(let i=0; i < launchesLength; i++)
@@ -53,6 +52,11 @@ function displayAllLaunches(launches)
   container.innerHTML=rowBody;
 }
 
+function setNumberOfPages(launches){
+  const launchesLength=launches.length;
+  paginationObj.number_of_pages = Math.floor(launchesLength/maxDisplayedLaunches);
+}
+
 function pagination(page_number)
 {
   paginationObj.offset = page_number*6;
@@ -70,10 +74,10 @@ function pagination(page_number)
     nextButton.classList.remove("disabled")
   }
 
-  fetch(`https://api.spacexdata.com/v3/launches?limit=${paginationObj.number_of_results}&offset=${paginationObj.offset}`)
+  fetch(`https://api.spacexdata.com/v3/launches?limit=${maxDisplayedLaunches}&offset=${paginationObj.offset}`)
   .then(response => response.json())
   .then(text => { 
-      console.log(text)
+      console.log(text);
       displayAllLaunches(text);
       }
   ) 
@@ -83,11 +87,16 @@ function pagination(page_number)
 }
 
 
-fetch("https://api.spacexdata.com/v3/launches?limit=6&offset=0")
+fetch("https://api.spacexdata.com/v3/launches/")
   .then(response => response.json())
-  .then(text => { 
-      console.log(text)
-      displayAllLaunches(text);
+  .then(launches => { 
+      console.log(launches);
+      setNumberOfPages(launches);
+      const firstDisplayedLaunches = [];
+      for(let i=0; i<maxDisplayedLaunches; i++){
+        firstDisplayedLaunches.push(launches[i])
+      }
+      displayAllLaunches(firstDisplayedLaunches);
       }
   ) 
   .catch((error) => {
