@@ -76,7 +76,12 @@ function pagination(page_number) {
   ) 
   .catch((error) => {
       console.error('Error:', error);
+      noPageFound();
   });
+}
+
+function noPageFound(){
+  alert("No page found");
 }
 
 function handleActivePageNumber(activePageNumber) {
@@ -139,9 +144,9 @@ fetch("https://api.spacexdata.com/v3/launches/")
       }
       urls();
       displayLaunches(firstDisplayedLaunches);
-      //pageURL = paginationObj.page_number;
       }
   ) 
   .catch((error) => {
       console.error('Error:', error);
+      noPageFound();
   });
