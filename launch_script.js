@@ -1,0 +1,1 @@
+console.log("https://thumbs.dreamstime.com/b/znaki-drogowe-znak-ostrzegawczy-w-trakcie-budowy-186691176.jpg");

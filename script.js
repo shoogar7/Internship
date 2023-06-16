@@ -40,7 +40,7 @@ function displayLaunches(launches) {
             <p class="card-text">${details}</p>
           </div>
           <div class="card-footer">
-            <a href="launch.flight_number" class="btn btn-primary">More about ${launchesArr.mission_name}</a>
+            <a href="launch.html" class="btn btn-primary">More about ${launchesArr.mission_name}</a>
           </div>
         </div>
       </div>
