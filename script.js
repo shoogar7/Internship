@@ -37,10 +37,10 @@ function displayLaunches(launches) {
           <img src="${image}" class="card-img-top" alt="mission_patch">
           <div class="card-body">
             <h5 class="card-title">${launchesArr.mission_name} | ${launchesArr.launch_year} | ID: ${launchesArr.flight_number}</h5>
-            <p class="card-text">${details}</p>
+            <p class="card-text cut-text">${details}</p>
           </div>
           <div class="card-footer">
-            <a href="launch.flight_number" class="btn btn-primary">More about ${launchesArr.mission_name}</a>
+            <a href="http://127.0.0.1:5500/launch.html?flight_number=${launchesArr.flight_number}" class="btn btn-primary">More about ${launchesArr.mission_name}</a>
           </div>
         </div>
       </div>
