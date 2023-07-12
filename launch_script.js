@@ -74,13 +74,32 @@ function displayLaunch(launch) {
   }
 }
 
+function errorParameter() {
+  const container = document.getElementById('con');
+  document.title = "Error";
+  let cardBody =
+  `<div class="card w-50" id="card"> 
+        <img src="Assets/sad-elon-musk-scaled.jpg" class="card-img-top  mx-auto" id="" alt="Sad Elon">
+        <div class="card-body">
+          <h5 class="card-title">Elon is sad</h5>
+          <h6 class="card-subtitle text-muted">He's sad because Twitter is burning, but now it's even worse...</h6>
+          <p class="card-text">An error occured, either the API stopped working or... you entered wrong flight number and it just doesn't exist, that's it... Just change it to one that exists!</p>
+        </div>
+        <div class="card-footer text-center">
+          <a href="index.html" class="btn btn-primary ">Back to all launches</a>
+        </div>
+  </div>`;
+  container.innerHTML = cardBody;
+}
+
 fetch(fetchURL)
-  .then(response => response.json())
-  .then(launch => { 
-    console.log(launch);
-    displayLaunch(launch);
-    }
-  ) 
-  .catch((error) => {
-      console.error('Error:', error);
-  });
+    .then(response => response.json())
+    .then(launch => { 
+      console.log(launch);
+      displayLaunch(launch);      
+      }
+    ) 
+    .catch((error) => {
+        console.error('Error:', error);
+        errorParameter();
+    });
